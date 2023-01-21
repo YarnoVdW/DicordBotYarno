@@ -1,5 +1,6 @@
-package org.example;
+package be.yarno;
 
+import be.yarno.eventlistener.BotYarnoEventListener;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -23,13 +24,6 @@ public class Main {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        while(botYarnoEventListener.isRunning()) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        jda.shutdown();
+
     }
 }
