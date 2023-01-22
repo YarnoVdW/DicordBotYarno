@@ -2,11 +2,14 @@
 
 plugins {
     id 'java'
+    id 'application'
 }
 
-group 'org.example'
+group 'be.yarno'
 version '1.0-SNAPSHOT'
+sourceCompatibility = 17
 
+mainClassName = 'Main'
 repositories {
     mavenCentral()
     allprojects {
