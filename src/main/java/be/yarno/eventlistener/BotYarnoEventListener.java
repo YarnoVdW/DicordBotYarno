@@ -13,6 +13,10 @@ public class BotYarnoEventListener extends ListenerAdapter {
 
     private final CommandHandler handler = new CommandHandler();
 
+    /**
+     * Method to handle the event when a message is sent
+     * @param event the event that is triggered when a message is sent
+     */
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;

@@ -16,9 +16,14 @@ public class NewsApi {
     private final String TOKEN = dotenv.get("NEWS_TOKEN");
     private final NewsApiClient client = new NewsApiClient(TOKEN);
 
+    /**
+     * Method to get the headlines of the news source
+     * @return a completable future with the headlines
+     */
     public CompletableFuture<String> getHeadlines() {
         CompletableFuture<String> future = new CompletableFuture<>();
         StringBuilder str = new StringBuilder();
+
         client.getEverything(new EverythingRequest.Builder().domains("demorgen.be").sortBy("publishedAt").build(), new NewsApiClient.ArticlesResponseCallback() {
             @Override
             public void onSuccess(ArticleResponse response) {

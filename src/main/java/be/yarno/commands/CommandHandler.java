@@ -20,6 +20,10 @@ public class CommandHandler {
     private final NewsApi newsApi = new NewsApi();
     private boolean hasAlreadySend = false;
 
+    /**
+     * Method to handle all the commands
+     * @param event the event that is triggered when a message is sent
+     */
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         String[] message = event.getMessage().getContentRaw().split(" ");
@@ -38,6 +42,10 @@ public class CommandHandler {
         this.imranSendAMessage(event);
     }
 
+    /**
+     * Method to handle the news command
+     * @param event the event that is triggered when a message is sent
+     */
     private void handleNewsCommand(MessageReceivedEvent event) {
         String titles = null;
         try {
@@ -49,6 +57,10 @@ public class CommandHandler {
         event.getChannel().sendMessage(titles).queue();
     }
 
+    /**
+     * Method to handle the help command
+     * @param event the event that is triggered when a message is sent
+     */
     private void handleHelpCommand(MessageReceivedEvent event) {
         String help = """
                  You can use the following commands:\s
@@ -63,6 +75,11 @@ public class CommandHandler {
         event.getChannel().sendMessage(help).queue();
     }
 
+    /**
+     *
+     * @param event the event that is triggered when a message is sent
+     * @param message the message that is sent
+     */
     private void handleWeatherCommand(MessageReceivedEvent event, String[] message) {
         String location = event.getMessage().getContentRaw().replace("/weather", "").trim();
         final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
@@ -92,7 +109,10 @@ public class CommandHandler {
         }
     }
 
-
+    /**
+     * Method to handle the shutdown command
+     * @param event the event that is triggered when a message is sent
+     */
     private void handleShutdownCommand(MessageReceivedEvent event) {
         if (!(event.getMessage().getAuthor().getName().equals("BoerYakke"))) return;
         event.getChannel().sendMessage("Shutting down...").queue();
