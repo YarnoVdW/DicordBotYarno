@@ -33,5 +33,18 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+ext {
+    botYarnoJar = "BotYarno"
+}
+jar {
+    archiveFileName = "${botYarnoJar}-1.jar"
+    from sourceSets.main.output
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+}
+
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
+
+
