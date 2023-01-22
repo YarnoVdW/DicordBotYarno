@@ -23,14 +23,30 @@ public class CommandHandler {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         String[] message = event.getMessage().getContentRaw().split(" ");
         switch (message[0]) {
-            case "/sum" -> handleSumCommand(event, message);
-            case "/ping" -> handlePingCommand(event);
-            case "/hi" -> handleHiCommand(event);
-            case "/shutdown" -> handleShutdownCommand(event);
-            case "/weather" -> handleWeatherCommand(event, message);
-            case "/help" -> helpHandlerCommand(event);
-            case "/news" -> newsHandlerCommand(event);
-            default -> event.getChannel().sendMessage("Invalid command").queue();
+            case "/sum":
+                handleSumCommand(event, message);
+                break;
+            case "/ping":
+                handlePingCommand(event);
+                break;
+            case "/hi":
+                handleHiCommand(event);
+                break;
+            case "/shutdown":
+                handleShutdownCommand(event);
+                break;
+            case "/weather":
+                handleWeatherCommand(event, message);
+                break;
+            case "/help":
+                helpHandlerCommand(event);
+                break;
+            case "/news":
+                newsHandlerCommand(event);
+                break;
+            default:
+                event.getChannel().sendMessage("Invalid command").queue();
+                break;
         }
         this.imranSendAMessage(event);
     }
