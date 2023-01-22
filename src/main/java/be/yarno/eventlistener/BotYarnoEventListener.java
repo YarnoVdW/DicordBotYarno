@@ -11,22 +11,12 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
  */
 public class BotYarnoEventListener extends ListenerAdapter {
 
-    private boolean running = true;
     private final CommandHandler handler = new CommandHandler();
+
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         handler.onMessageReceived(event);
-    }
-
-
-
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean running) {
-        this.running = running;
     }
 
 

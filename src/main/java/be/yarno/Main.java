@@ -16,6 +16,7 @@ public class Main {
         String token = dotenv.get("DISCORD_TOKEN");
         BotYarnoEventListener botYarnoEventListener = new BotYarnoEventListener();
 
+
         JDA jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS)).build();
         try {
             jda.awaitReady();

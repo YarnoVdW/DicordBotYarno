@@ -1,11 +1,13 @@
 package be.yarno.commands;
 
+import be.yarno.utils.NewsApi;
 import be.yarno.utils.WeatherApiClient;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Van de Weyer Yarno
@@ -13,6 +15,7 @@ import java.io.IOException;
  */
 public class CommandHandler {
     private final WeatherApiClient weatherApiClient = new WeatherApiClient();
+    private final NewsApi newsApi = new NewsApi();
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         String[] message = event.getMessage().getContentRaw().split(" ");
@@ -22,8 +25,32 @@ public class CommandHandler {
             case "/hi" -> handleHiCommand(event);
             case "/shutdown" -> handleShutdownCommand(event);
             case "/weather" -> handleWeatherCommand(event, message);
+            case "/help" -> helpHandlerCommand(event);
+            case "/news" -> newsHandlerCommand(event);
             default -> event.getChannel().sendMessage("Invalid command").queue();
         }
+    }
+
+    private void newsHandlerCommand(MessageReceivedEvent event) {
+        String titles = null;
+        try {
+            titles = newsApi.getHeadlines().get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
+        event.getChannel().sendMessage(titles).queue();
+    }
+
+    private void helpHandlerCommand(MessageReceivedEvent event) {
+        String help = """
+                You can use the following commands:\s
+                \t● /sum <list of number>
+                \t● /ping
+                \t● /hi
+                \t● /weather <City>
+                \t● /help""";
+        event.getChannel().sendMessage(help).queue();
     }
 
     private void handleWeatherCommand(MessageReceivedEvent event, String[] message) {
@@ -31,6 +58,10 @@ public class CommandHandler {
         String apiKey = "979799172c2fdf7913c115246c4221f1";
         try {
             JSONObject jsonObject = weatherApiClient.getWeather(location, apiKey);
+            if(jsonObject == null) {
+                event.getChannel().sendMessage("The given city was not found!").queue();
+                return;
+            }
             String weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
             int temp = jsonObject.getJSONObject("main").getInt("temp");
             int celsius = (int) (temp - 273.15);
@@ -51,9 +82,11 @@ public class CommandHandler {
 
 
     private void handleShutdownCommand(MessageReceivedEvent event) {
+        if(!event.getMessage().getAuthor().getName().equals("BoerYakke")) return;
         event.getChannel().sendMessage("Shutting down...").queue();
         JDA jda = event.getJDA();
         jda.shutdown();
+        System.exit(0);
     }
 
     private void handleHiCommand(MessageReceivedEvent event) {

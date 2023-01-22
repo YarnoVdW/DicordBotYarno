@@ -22,6 +22,8 @@ dependencies {
     implementation 'com.github.DV8FromTheWorld:JDA:v5.0.0-beta.1'
     implementation 'io.github.cdimascio:dotenv-java:2.3.2'
     implementation 'org.json:json:20171018'
+    implementation 'com.github.KwabenBerko:News-API-Java:1.0.2'
+
 
 }
 
