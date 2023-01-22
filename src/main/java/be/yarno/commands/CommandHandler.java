@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -23,35 +24,21 @@ public class CommandHandler {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         String[] message = event.getMessage().getContentRaw().split(" ");
         switch (message[0]) {
-            case "/sum":
-                handleSumCommand(event, message);
-                break;
-            case "/ping":
-                handlePingCommand(event);
-                break;
-            case "/hi":
-                handleHiCommand(event);
-                break;
-            case "/shutdown":
-                handleShutdownCommand(event);
-                break;
-            case "/weather":
-                handleWeatherCommand(event, message);
-                break;
-            case "/help":
-                helpHandlerCommand(event);
-                break;
-            case "/news":
-                newsHandlerCommand(event);
-                break;
-            default:
-                event.getChannel().sendMessage("Invalid command").queue();
-                break;
+            case "/sum" -> handleSumCommand(event, message);
+            case "/ping" -> handlePingCommand(event);
+            case "/hi" -> handleHiCommand(event);
+            case "/shutdown" -> handleShutdownCommand(event);
+            case "/weather" -> handleWeatherCommand(event, message);
+            case "/help" -> handleHelpCommand(event);
+            case "/news" -> handleNewsCommand(event);
+            case "/flieter" -> handleFlieterCommand(event);
+            case "/pong" -> handlePongCommand(event);
+            default -> event.getChannel().sendMessage("Invalid command").queue();
         }
         this.imranSendAMessage(event);
     }
 
-    private void newsHandlerCommand(MessageReceivedEvent event) {
+    private void handleNewsCommand(MessageReceivedEvent event) {
         String titles = null;
         try {
             titles = newsApi.getHeadlines().get();
@@ -62,14 +49,17 @@ public class CommandHandler {
         event.getChannel().sendMessage(titles).queue();
     }
 
-    private void helpHandlerCommand(MessageReceivedEvent event) {
+    private void handleHelpCommand(MessageReceivedEvent event) {
         String help = """
-                You can use the following commands:\s
-                \t● /sum <list of number>
-                \t● /ping
-                \t● /hi
-                \t● /weather <City>
-                \t● /help""";
+                 You can use the following commands:\s
+                 \t● /sum <list of number>
+                 \t● /ping
+                 \t● /pong
+                 \t● /hi
+                 \t● /weather <City>
+                 \t● /news
+                 \t● /flieter
+                 \t● /help""";
         event.getChannel().sendMessage(help).queue();
     }
 
@@ -104,7 +94,7 @@ public class CommandHandler {
 
 
     private void handleShutdownCommand(MessageReceivedEvent event) {
-        if (!event.getMessage().getAuthor().getName().equals("BoerYakke")) return;
+        if (!(event.getMessage().getAuthor().getName().equals("BoerYakke"))) return;
         event.getChannel().sendMessage("Shutting down...").queue();
         JDA jda = event.getJDA();
         jda.shutdown();
@@ -119,10 +109,21 @@ public class CommandHandler {
         event.getChannel().sendMessage("Pong!").queue();
     }
 
+    private void handlePongCommand(MessageReceivedEvent event) {
+        event.getChannel().sendMessage("Ping!").queue();
+    }
+
     private void handleSumCommand(MessageReceivedEvent event, String[] message) {
         int result = 0;
         for (int i = 1; i < message.length; i++) {
-            result += Integer.parseInt(message[i]);
+
+            try {
+                result += Integer.parseInt(message[i]);
+            } catch (NumberFormatException e) {
+                event.getChannel().sendMessage("Pakt is een klender getal jom snul").queue();
+                return;
+            }
+
         }
         int finalResult = result;
         event.getAuthor().openPrivateChannel().queue((channel ->
@@ -134,5 +135,13 @@ public class CommandHandler {
             hasAlreadySend = true;
             event.getChannel().sendMessage("OMG GUYS ITS OUR LORD AND SAVIOR IMRAN ALL HEIL IMRAN").queue();
         }
+    }
+
+    private void handleFlieterCommand(MessageReceivedEvent event) {
+        String[] array = {"Mijn robot penisje is groter dan de uwe", "flieterdieter", "TAALGEBRUIK!", "wajom" +
+                " ME has biggest pienies"};
+
+        Random r = new Random();
+        event.getChannel().sendMessage(array[r.nextInt(5)]).queue();
     }
 }
