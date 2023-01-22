@@ -91,10 +91,12 @@ public class CommandHandler {
                 event.getChannel().sendMessage("The given city was not found!").queue();
                 return;
             }
-            String weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
+            String weather = jsonObject.getJSONArray("weather")
+                    .getJSONObject(0).getString("main");
             int temp = jsonObject.getJSONObject("main").getInt("temp");
             int celsius = (int) (temp - 273.15);
-            String weatherEmoji = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main");
+            String weatherEmoji = jsonObject.getJSONArray("weather")
+                    .getJSONObject(0).getString("main");
             String emoji = switch (weatherEmoji) {
                 case "Clouds" -> "\u2601";
                 case "Clear" -> "\u2600";
@@ -103,7 +105,8 @@ public class CommandHandler {
                 case "Thunderstorm" -> "\u26C8";
                 default -> "";
             };
-            event.getChannel().sendMessage("The weather in " + location + " is " + weather + " " + emoji + " with a temperature of " + celsius + " \u2103").queue();
+            event.getChannel().sendMessage("The weather in " + location + " is " + weather + " "
+                    + emoji + " with a temperature of " + celsius + " \u2103").queue();
         } catch (IOException e) {
             event.getChannel().sendMessage("Error getting weather information for location " + location).queue();
         }
@@ -114,7 +117,8 @@ public class CommandHandler {
      * @param event the event that is triggered when a message is sent
      */
     private void handleShutdownCommand(MessageReceivedEvent event) {
-        if (!(event.getMessage().getAuthor().getName().equals("BoerYakke"))) return;
+        if (!(event.getMessage().getAuthor().getName().equals("BoerYakke")
+                || event.getMessage().getAuthor().getName().equals("wurrycorst"))) return;
         event.getChannel().sendMessage("Shutting down...").queue();
         JDA jda = event.getJDA();
         jda.shutdown();
