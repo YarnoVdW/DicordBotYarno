@@ -2,6 +2,7 @@ package be.yarno.commands;
 
 import be.yarno.utils.NewsApi;
 import be.yarno.utils.WeatherApiClient;
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.json.JSONObject;
@@ -16,6 +17,8 @@ import java.util.concurrent.ExecutionException;
 public class CommandHandler {
     private final WeatherApiClient weatherApiClient = new WeatherApiClient();
     private final NewsApi newsApi = new NewsApi();
+    private boolean hasAlreadySend = false;
+
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         String[] message = event.getMessage().getContentRaw().split(" ");
@@ -29,6 +32,7 @@ public class CommandHandler {
             case "/news" -> newsHandlerCommand(event);
             default -> event.getChannel().sendMessage("Invalid command").queue();
         }
+        this.imranSendAMessage(event);
     }
 
     private void newsHandlerCommand(MessageReceivedEvent event) {
@@ -55,10 +59,12 @@ public class CommandHandler {
 
     private void handleWeatherCommand(MessageReceivedEvent event, String[] message) {
         String location = event.getMessage().getContentRaw().replace("/weather", "").trim();
-        String apiKey = "979799172c2fdf7913c115246c4221f1";
+        final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+        final String apiKey = dotenv.get("WEATHER_TOKEN");
+
         try {
             JSONObject jsonObject = weatherApiClient.getWeather(location, apiKey);
-            if(jsonObject == null) {
+            if (jsonObject == null) {
                 event.getChannel().sendMessage("The given city was not found!").queue();
                 return;
             }
@@ -82,7 +88,7 @@ public class CommandHandler {
 
 
     private void handleShutdownCommand(MessageReceivedEvent event) {
-        if(!event.getMessage().getAuthor().getName().equals("BoerYakke")) return;
+        if (!event.getMessage().getAuthor().getName().equals("BoerYakke")) return;
         event.getChannel().sendMessage("Shutting down...").queue();
         JDA jda = event.getJDA();
         jda.shutdown();
@@ -105,5 +111,12 @@ public class CommandHandler {
         int finalResult = result;
         event.getAuthor().openPrivateChannel().queue((channel ->
                 channel.sendMessage("The sum is " + finalResult).queue()));
+    }
+
+    private void imranSendAMessage(MessageReceivedEvent event) {
+        if (event.getAuthor().getName().equals("Imran") && !hasAlreadySend) {
+            hasAlreadySend = true;
+            event.getChannel().sendMessage("OMG GUYS ITS OUR LORD AND SAVIOR IMRAN ALL HEIL IMRAN").queue();
+        }
     }
 }

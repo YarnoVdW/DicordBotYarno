@@ -17,6 +17,7 @@ public class BotYarnoEventListener extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         handler.onMessageReceived(event);
+
     }
 
 

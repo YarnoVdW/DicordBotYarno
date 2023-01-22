@@ -4,6 +4,8 @@ import be.yarno.eventlistener.BotYarnoEventListener;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 /**
@@ -17,7 +19,13 @@ public class Main {
         BotYarnoEventListener botYarnoEventListener = new BotYarnoEventListener();
 
 
-        JDA jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS)).build();
+
+        JDA jda = JDABuilder.createDefault(token)
+                .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
+                .build();
+        jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.playing("minekweft"));
+
+
         try {
             jda.awaitReady();
             jda.addEventListener(botYarnoEventListener);

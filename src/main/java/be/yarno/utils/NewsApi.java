@@ -1,7 +1,6 @@
 package be.yarno.utils;
 
 import com.kwabenaberko.newsapilib.NewsApiClient;
-import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 import io.github.cdimascio.dotenv.Dotenv;
