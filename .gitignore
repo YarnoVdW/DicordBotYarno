@@ -1,5 +1,4 @@
 .env
-.gradle
 .idea
 **/build/
 **/out/

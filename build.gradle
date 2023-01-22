@@ -24,6 +24,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     implementation 'com.github.DV8FromTheWorld:JDA:v5.0.0-beta.1'
     implementation 'io.github.cdimascio:dotenv-java:2.3.2'
+    runtimeOnly 'io.github.cdimascio:dotenv-java:2.3.2'
     implementation 'org.json:json:20171018'
     implementation 'com.github.KwabenBerko:News-API-Java:1.0.2'
 
@@ -36,11 +37,18 @@ test {
 ext {
     botYarnoJar = "BotYarno"
 }
+
 jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveFileName = "${botYarnoJar}-1.jar"
     from sourceSets.main.output
+    from configurations.runtimeClasspath
     manifest {
-        attributes 'Main-Class': 'Main'
+        attributes 'Main-Class': 'be.yarno.Main'
+
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 

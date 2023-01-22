@@ -1,1 +1,1 @@
-web: java -jar build/libs/BotYarno-1.jar
+worker: java -jar build/libs/BotYarno-1.jar
