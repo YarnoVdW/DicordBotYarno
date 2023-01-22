@@ -13,8 +13,8 @@ import java.net.URL;
  * 21/01/2023
  */
 public class WeatherApiClient {
-    private final String API_URL = "http://pro.openweathermap.org/data/2.5/weather?q=";
     public JSONObject getWeather(String location, String apiKey) throws IOException {
+        String API_URL = "http://pro.openweathermap.org/data/2.5/weather?q=";
         URL url = new URL(API_URL + location + ",be&appid=" + apiKey);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
