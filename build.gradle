@@ -9,7 +9,7 @@ group 'be.yarno'
 version '1.0-SNAPSHOT'
 
 
-mainClassName = 'Main'
+mainClassName = 'be.yarno.Main'
 repositories {
     mavenCentral()
     allprojects {
