@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"be.yarno.eventlistener","l":"BotYarnoEventListener"},{"p":"be.yarno.commands","l":"CommandHandler"},{"p":"be.yarno","l":"Main"},{"p":"be.yarno.utils","l":"NewsApi"},{"p":"be.yarno.utils","l":"WeatherApiClient"}];updateSearchResults();
