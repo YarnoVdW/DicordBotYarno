@@ -14,9 +14,8 @@ import java.net.URL;
  */
 public class WeatherApiClient {
     /**
-     *
      * @param location the location of the weather
-     * @param apiKey the api key to use the api
+     * @param apiKey   the api key to use the api
      * @return the weather of the location
      * @throws IOException if the connection to the api fails
      */
@@ -28,23 +27,23 @@ public class WeatherApiClient {
 
     /**
      * Method to retrieve the forecast of the location
+     *
      * @param location the location of the weather
-     * @param apiKey the api key to use the api
+     * @param apiKey   the api key to use the api
      * @return the weather of the location
-     * @throws IOException
      */
 
     public JSONObject getWeatherForecast(String location, String apiKey) throws IOException {
         String API_URL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=";
-        URL url = new URL(API_URL+location+",be&appid="+apiKey+"&cnt=7");
+        URL url = new URL(API_URL + location + ",be&appid=" + apiKey + "&cnt=7");
         return makeConnection(url);
     }
 
     /**
      * Method to make the connection to the api
+     *
      * @param url the url to connect to
      * @return the json object of the response
-     * @throws IOException
      */
     private JSONObject makeConnection(URL url) throws IOException {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();

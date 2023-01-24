@@ -18,6 +18,7 @@ public class NewsApi {
 
     /**
      * Method to get the headlines of the news source
+     *
      * @return a completable future with the headlines
      */
     public CompletableFuture<String> getHeadlines() {
