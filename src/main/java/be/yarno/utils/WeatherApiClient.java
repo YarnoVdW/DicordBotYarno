@@ -20,7 +20,7 @@ public class WeatherApiClient {
      * @throws IOException if the connection to the api fails
      */
     public JSONObject getCurrentWeather(String location, String apiKey) throws IOException {
-        String API_URL = "http://pro.openweathermap.org/data/2.5/weather?q=";
+        String API_URL = "https://pro.openweathermap.org/data/2.5/weather?q=";
         URL url = new URL(API_URL + location + ",be&appid=" + apiKey);
         return makeConnection(url);
     }

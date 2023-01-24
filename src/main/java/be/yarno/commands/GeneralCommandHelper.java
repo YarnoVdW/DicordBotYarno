@@ -1,17 +1,8 @@
 package be.yarno.commands;
 
-import be.yarno.utils.NewsApi;
-import be.yarno.utils.WeatherApiClient;
-import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Date;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Van de Weyer Yarno
@@ -35,7 +26,6 @@ public class GeneralCommandHelper {
             case "/help" -> handleHelpCommand(event);
             case "/flieter" -> handleFlieterCommand(event);
             case "/pong" -> handlePongCommand(event);
-            default -> event.getChannel().sendMessage("Invalid command").queue();
         }
         this.imranSendAMessage(event);
     }
@@ -113,8 +103,7 @@ public class GeneralCommandHelper {
     }
 
     private void handleFlieterCommand(MessageReceivedEvent event) {
-        String[] array = {"Mijn robot penisje is groter dan de uwe", "flieterdieter", "TAALGEBRUIK!", "wajom" +
-                " ME has biggest pienies"};
+        String[] array = {"flieterdieter", "TAALGEBRUIK!"};
 
         Random r = new Random();
         event.getChannel().sendMessage(array[r.nextInt(5)]).queue();

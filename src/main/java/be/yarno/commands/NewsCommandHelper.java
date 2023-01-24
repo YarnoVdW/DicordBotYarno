@@ -23,8 +23,6 @@ public class NewsCommandHelper {
         String[] message = event.getMessage().getContentRaw().split(" ");
         if ("/news".equals(message[0])) {
             handleNewsCommand(event);
-        } else {
-            event.getChannel().sendMessage("Invalid command").queue();
         }
     }
 
@@ -34,7 +32,7 @@ public class NewsCommandHelper {
      * @param event the event that is triggered when a message is sent
      */
     private void handleNewsCommand(MessageReceivedEvent event) {
-        String titles = null;
+        String titles;
         try {
             titles = newsApi.getHeadlines().get();
         } catch (InterruptedException | ExecutionException e) {

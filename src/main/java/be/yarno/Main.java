@@ -19,7 +19,6 @@ public class Main {
         BotYarnoEventListener botYarnoEventListener = new BotYarnoEventListener();
 
 
-
         JDA jda = JDABuilder.createDefault(token)
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
                 .build();

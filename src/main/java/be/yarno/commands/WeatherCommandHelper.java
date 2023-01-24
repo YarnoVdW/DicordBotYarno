@@ -23,19 +23,16 @@ public class WeatherCommandHelper {
         if (!event.getMessage().getContentRaw().startsWith("/")) return;
         String[] message = event.getMessage().getContentRaw().split(" ");
         switch (message[0]) {
-            case "/weather" -> handleWeatherCommand(event, message);
+            case "/weather" -> handleWeatherCommand(event);
             case "/forecast" -> handleForecastCommand(event, message);
-            default -> event.getChannel().sendMessage("Invalid command").queue();
-
         }
 
     }
 
     /**
      * @param event   the event that is triggered when a message is sent
-     * @param message the message that is sent
      */
-    private void handleWeatherCommand(MessageReceivedEvent event, String[] message) {
+    private void handleWeatherCommand(MessageReceivedEvent event) {
         String location = event.getMessage().getContentRaw().replace("/weather", "").trim();
         final Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
         final String apiKey = dotenv.get("WEATHER_TOKEN");
@@ -102,9 +99,9 @@ public class WeatherCommandHelper {
             String weatherEmoji = getWeatherEmoji(condition);
 
 
-            forecastMessage.append(formattedDate).append(" - ")
+            forecastMessage.append(formattedDate).append(" It will be ")
                     .append(tempDay)
-                    .append("°C, ")
+                    .append("°C, with a chance of ")
                     .append(condition)
                     .append(" ").append(weatherEmoji).append("\n");
         }
