@@ -7,3 +7,4 @@
 # ignore all .html files
 *.html
 *.js
+*.css
