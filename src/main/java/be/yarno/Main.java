@@ -22,6 +22,7 @@ public class Main {
         JDA jda = JDABuilder.createDefault(token)
                 .enableIntents(GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS))
                 .build();
+
         jda.getPresence().setPresence(OnlineStatus.ONLINE, Activity.playing("minekweft"));
 
 
